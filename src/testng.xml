@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="MyTestSuite">
+    <!-- Define test parameters -->
+    <parameter name="username" value="user1"/>
+    <parameter name="password" value="password1"/>
+
+    <!-- Test Class 1: LoginTest -->
+    <test name="LoginTest">
+        <classes>
+            <class name="org.example.LoginTests"/>
+        </classes>
+    </test>
+</suite>
