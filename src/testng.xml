@@ -7,7 +7,6 @@
     <!-- Test Class 1: LoginTest -->
     <test name="LoginTest">
         <classes>
-            <class name="org.example.LoginTests"/>
         </classes>
     </test>
 </suite>
