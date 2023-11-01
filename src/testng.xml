@@ -4,4 +4,10 @@
     <parameter name="username" value="user1"/>
     <parameter name="password" value="password1"/>
 
+    <!-- Test Class 1: LoginTest -->
+    <test name="LoginTest">
+        <classes>
+            <class name="org.example.LoginTests"/>
+        </classes>
+    </test>
 </suite>
