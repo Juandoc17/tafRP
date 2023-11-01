@@ -4,6 +4,10 @@
     <parameter name="username" value="user1"/>
     <parameter name="password" value="password1"/>
 
+    <listeners>
+        <listener class-name="org.example.testReporter.TestListener" />
+    </listeners>
+
     <!-- Test Class 1: LoginTest -->
     <test name="LoginTest">
         <classes>
