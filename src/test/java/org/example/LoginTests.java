@@ -1,4 +1,5 @@
 package org.example;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -7,13 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-
+@DisplayName("Example of a Test Class from Login Module")
 public class LoginTests extends BaseTests {
 
     private EventFiringWebDriver driver;
     private static final Logger logger = LogManager.getLogger(LoginTests.class);
 
     @Test
+    @DisplayName("Example of a Login Test Method")
     public void testLogin() {
         // Find the username and password fields and the login button
         WebElement usernameField = driver.findElement(By.id("username"));

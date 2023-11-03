@@ -1,25 +1,24 @@
-package org.example;
-
+package org.example.testReporter;
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+      import com.aventstack.extentreports.ExtentTest;
+      import com.aventstack.extentreports.Status;
+      import org.testng.ITestContext;
+      import org.testng.ITestListener;
+      import org.testng.ITestResult;
 
 public class TestListener implements ITestListener {
-    private static ExtentReports extent = ExtentManager.createInstance("extent.html");
-    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+    private ExtentReports extent = ExtentManager.createInstance("extent.html");
+    private ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName());
+        ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName(), result.getMethod().getDescription());
         test.set(extentTest);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        test.get().pass("Test passed");
+        test.get().log(Status.PASS, "Test passed");
     }
 
     @Override
