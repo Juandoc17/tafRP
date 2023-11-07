@@ -2,7 +2,7 @@ package org.example;
 
 import com.google.common.io.Files;
 
-import org.example.pages.HomePage;
+import org.example.pages.LoginPage;
 import org.example.testReporter.TestListener;
 import org.example.utils.*;
 import org.openqa.selenium.*;
@@ -15,25 +15,37 @@ import org.testng.annotations.Listeners;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+
+/**
+ * BaseTests is a base class for all test classes.
+ * This class can include common setup and teardown methods, as well as common utilities
+ * for the tests. By extending this class, each test class can avoid code duplication
+ * and the tests can be more organized and readable.
+ *
+ * @author Juan Ocampo
+ * @version 1.0
+ */
 @Listeners(TestListener.class)
 public class BaseTests {
 
-    private EventFiringWebDriver driver;
-    protected HomePage homePage;
+    protected EventFiringWebDriver driver;
+    protected LoginPage loginPage;
 
     @BeforeClass
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "resources/drivers/chromedriver.exe");
         driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
         driver.register(new EventReporter());
+        loginPage = new LoginPage(driver);
     }
 
     @BeforeMethod
     public void goHome(){
         driver.get("https://www.reportportal.com/");
         driver.manage().window().maximize();
-        homePage = new HomePage(driver);
     }
 
     @AfterClass
@@ -42,21 +54,21 @@ public class BaseTests {
     }
 
     @AfterMethod
-    public void recordFailure(ITestResult result){
-        if(ITestResult.FAILURE == result.getStatus())
-        {
+    public void recordFailure(ITestResult result) {
+        if(ITestResult.FAILURE == result.getStatus()) {
             var camera = (TakesScreenshot)driver;
             File screenshot = camera.getScreenshotAs(OutputType.FILE);
-            try{
-                Files.move(screenshot, new File("resources/screenshots/" + "errorExecution" + ".png"));
-            }catch(IOException e){
+
+            String testName = result.getName();
+            String dateTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String screenshotName = testName + "_" + dateTime + ".png";
+
+            try {
+                Files.move(screenshot, new File("resources/screenshots/" + screenshotName));
+            } catch(IOException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public WindowManager getWindowManager(){
-        return new WindowManager(driver);
     }
 
     private ChromeOptions getChromeOptions(){
@@ -69,4 +81,8 @@ public class BaseTests {
     public CookieManager getCookieManager(){
         return new CookieManager(driver);
     }
+    public WindowManager getWindowManager(){
+        return new WindowManager(driver);
+    }
 }
+

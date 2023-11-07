@@ -7,24 +7,32 @@ import org.testng.annotations.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ * LoginTests is a class that extends the BaseTests class.
+ * This class contains tests related to the login functionality of the application.
+ * Each test method in this class should correspond to a specific aspect of the login functionality.
+ *
+ * @author Juan Ocampo
+ * @version 1.0
+ */
 @DisplayName("Example of a Test Class from Login Module")
 public class LoginTests extends BaseTests {
-
-    private EventFiringWebDriver driver;
     private static final Logger logger = LogManager.getLogger(LoginTests.class);
+    private WebElement usernameField = driver.findElement(By.id("username"));
+    private WebElement passwordField = driver.findElement(By.id("password"));
+    private WebElement loginButton = driver.findElement(By.id("loginButton"));
 
+    /**
+     * This method is a Base for Future LoginTest.
+     * Check Successful Login Functionalities
+     */
     @Test
     @DisplayName("Example of a Login Test Method")
     public void testLogin() {
-        // Find the username and password fields and the login button
-        WebElement usernameField = driver.findElement(By.id("username"));
-        WebElement passwordField = driver.findElement(By.id("password"));
-        WebElement loginButton = driver.findElement(By.id("loginButton"));
 
         logger.info("Typing the credentials in LoginPage");
-        usernameField.sendKeys("your_username");
-        passwordField.sendKeys("your_password");
+        fillUserNameField("Juan");
+        fillPasswordField("MyPassword");
 
         logger.info("Login Action Button");
         loginButton.click();
@@ -34,5 +42,10 @@ public class LoginTests extends BaseTests {
         assert dashboardHeader.isDisplayed() : "Login failed.";
         logger.info("Login successful.");
     }
-
+    public void fillUserNameField(String username){
+        usernameField.sendKeys(username);
+    }
+    public void fillPasswordField(String password){
+        passwordField.sendKeys(password);
+    }
 }

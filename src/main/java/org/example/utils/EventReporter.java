@@ -6,6 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
+/**
+ * EventReporter is a class that implements the WebDriverEventListener interface.
+ * This class is used to report on various events that occur during the execution
+ * of a WebDriver script.
+ */
 public class EventReporter implements WebDriverEventListener {
     @Override
     public void beforeAlertAccept(WebDriver webDriver) {
