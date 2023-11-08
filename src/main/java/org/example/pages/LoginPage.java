@@ -1,55 +1,33 @@
 package org.example.pages;
 
-import java.util.List;
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+
+import com.mongodb.diagnostics.logging.Logger;
+
 
 /**
- * LoginPage is the initial page of the application.
- *
+ * The LoginPage class represents the login page of the application.
+ * It is responsible for handling login functionalities, including sign-in operations and providing assistance to users.
  */
-public class LoginPage {
-    private WebDriver driver;
+public class LoginPage extends MainFunctional {
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-    }
+	private WebElement usernameField = driver.findElement(By.id("username"));
+	private WebElement passwordField = driver.findElement(By.id("password"));
+	private WebElement loginButton = driver.findElement(By.id("loginButton"));
 
-    public WebElement findElement(By locator) {
-        return driver.findElement(locator);
-    }
+	public LoginPage(WebDriver driver, Logger logger) {
+		super(driver, logger);
+	}
 
-    public List<WebElement> findElements(By locator) {
-        return driver.findElements(locator);
-    }
+	public void fillUserNameField(String username) {
+		fillField(usernameField, username);
+	}
 
-    public String getText(WebElement element) {
-        return element.getText();
-    }
+	public void fillPasswordField(String password) {
+		fillField(passwordField, password);
+	}
 
-    public String getText(By locator) {
-        return driver.findElement(locator).getText();
-    }
-
-    public void type(String inputText, By locator) {
-        driver.findElement(locator).sendKeys(inputText);
-    }
-
-    public void click(By locator) {
-        driver.findElement(locator).click();
-    }
-
-    public void hoverElement(By locator) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(findElement(locator)).perform();
-    }
-
-    public Boolean isDisplayed(By locator) {
-        try {
-            return driver.findElement(locator).isDisplayed();
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-            return false;
-        }
-    }
+	public void clickLoginButton() {
+		clickButton(loginButton);
+	}
 }
