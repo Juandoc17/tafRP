@@ -3,6 +3,7 @@ package org.example.testReporter;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
+
 public class ExtentManager {
 	private static ExtentReports extent;
 

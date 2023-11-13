@@ -1,52 +1,25 @@
 package org.example.pages;
 
-import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+import com.mongodb.diagnostics.logging.Logger;
 
 
-public class HomePage {
-    private WebDriver driver;
+/**
+ * The HomePage class represents the home page of the application.
+ * It is responsible for displaying the main content to users after they have successfully logged in.
+ * This includes navigation menus, user-specific information, and other key features of the application.
+ */
+public class HomePage extends MainFunctional {
 
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
-    }
+	private By dashboardHeaderLocator = By.id("dashboardHeader");
 
-    public WebElement findElement(By locator) {
-        return driver.findElement(locator);
-    }
+	public HomePage(WebDriver driver, Logger logger) {
+		super(driver, logger);
+	}
 
-    public List<WebElement> findElements(By locator) {
-        return driver.findElements(locator);
-    }
-
-    public String getText(WebElement element) {
-        return element.getText();
-    }
-
-    public String getText(By locator) {
-        return driver.findElement(locator).getText();
-    }
-
-    public void type(String inputText, By locator) {
-        driver.findElement(locator).sendKeys(inputText);
-    }
-
-    public void click(By locator) {
-        driver.findElement(locator).click();
-    }
-
-    public void hoverElement(By locator) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(findElement(locator)).perform();
-    }
-
-    public Boolean isDisplayed(By locator) {
-        try {
-            return driver.findElement(locator).isDisplayed();
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-            return false;
-        }
-    }
+	public boolean checkPageIsDisplayed() {
+		return isDisplayed(dashboardHeaderLocator);
+	}
 }
