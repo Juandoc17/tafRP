@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.mongodb.diagnostics.logging.Logger;
+import java.util.logging.Logger;
 
 
 /**
@@ -16,10 +18,11 @@ import com.mongodb.diagnostics.logging.Logger;
 public class MainFunctional {
 	protected WebDriver driver;
 	protected Logger logger;
-
-	public MainFunctional(WebDriver driver, Logger logger) {
+	protected WebDriverWait wait;
+	public MainFunctional(WebDriver driver, Logger logger,WebDriverWait wait) {
 		this.driver = driver;
 		this.logger = logger;
+		this.wait = wait;
 	}
 
 	protected void fillField(WebElement field, String value) {
@@ -53,10 +56,25 @@ public class MainFunctional {
 
 	public Boolean isDisplayed(By locator) {
 		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 			return driver.findElement(locator).isDisplayed();
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			logger.error("Element not found: " + locator, e);
+			logger.info("Element not found: " + locator);
 			return false;
 		}
+	}
+
+	public Boolean isClickable(By locator) {
+		try {
+			WebElement element = driver.findElement(locator);
+			wait.until(ExpectedConditions.elementToBeClickable(element));
+			return true;
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			logger.info("Element not clickable: " + locator);
+			return false;
+		}
+	}
+	public String getElementTag(WebElement webElement) {
+		return webElement.getTagName();
 	}
 }

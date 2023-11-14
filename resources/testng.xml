@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="MyTestSuite">
+    <!-- Define test parameters -->
+    <parameter name="username" value="user1"/>
+    <parameter name="password" value="password1"/>
+
+    <listeners>
+        <listener class-name="org.example.BDDTesting.testReporter.TestListener" />
+    </listeners>
+
+    <!-- Test Class 1: LoginTest -->
+    <test name="LoginTest">
+        <classes>
+            <class name="org.example.HomePageTests"/>
+        </classes>
+    </test>
+</suite>

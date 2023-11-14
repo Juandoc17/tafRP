@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.logging.log4j.LogManager;
+import java.util.logging.Logger;
 import org.example.pages.HomePage;
 import org.example.pages.LoginPage;
-import org.example.testReporter.TestListener;
+import org.example.BDDTesting.testReporter.TestListener;
 import org.example.utils.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -19,7 +19,6 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import com.google.common.io.Files;
-import com.mongodb.diagnostics.logging.Logger;
 
 
 /**
@@ -35,22 +34,21 @@ import com.mongodb.diagnostics.logging.Logger;
 public class BaseTests {
 
 	protected EventFiringWebDriver driver;
-	protected LoginPage loginPage;
 	protected HomePage homePage;
-	private static final Logger logger = (Logger) LogManager.getLogger(BaseTests.class);
+	protected static final Logger logger = Logger.getLogger(BaseTests.class.getName());
+
 
 	@BeforeClass
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "resources/drivers/chromedriver.exe");
 		driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
 		driver.register(new EventReporter());
-		loginPage = new LoginPage(driver, logger);
 		homePage = new HomePage(driver, logger);
 	}
 
 	@BeforeMethod
 	public void goHome() {
-		driver.get("https://www.reportportal.com/");
+		driver.get("https://the-internet.herokuapp.com/");
 		driver.manage().window().maximize();
 	}
 
