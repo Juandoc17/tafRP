@@ -49,3 +49,6 @@ test-output/
 
 # Selenium captured images
 selenium_captured_images/
+
+# Generated Report
+extend.html
