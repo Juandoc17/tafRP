@@ -23,6 +23,7 @@
         <mavenPlugins.version>3.6.1</mavenPlugins.version>
         <cucumberJava.version>7.14.0</cucumberJava.version>
         <mockito.version>5.7.0</mockito.version>
+        <restAssured.version>5.3.2</restAssured.version>
         <maven.compiler.target>20</maven.compiler.target>
     </properties>
 
@@ -109,6 +110,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${restAssured.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
