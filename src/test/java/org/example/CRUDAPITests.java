@@ -5,8 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.test.web.client.ResponseActions;
- 
+
 public class CRUDAPITests extends BaseTests{
  
 	private String baseUrl = "https://fakerestapi.azurewebsites.net/api/v1/Activities";
@@ -16,7 +15,7 @@ public class CRUDAPITests extends BaseTests{
 		String title = "string";
 		String dueDate = "2023-11-29T17:52:03.204Z";
 		String body = "{ \"id\": 0, \"title\": \"" + title + "\", \"dueDate\": \"" + dueDate + "\", \"completed\": true }";
-		ResponseActions response = given()
+		Response response = given()
 			.contentType("application/json")
 			.body(body)
 			.when()
