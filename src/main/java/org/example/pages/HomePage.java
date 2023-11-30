@@ -1,6 +1,8 @@
 package org.example.pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.util.logging.Logger;
 
 /**
@@ -18,8 +20,8 @@ public class HomePage extends MainFunctional {
 	private By loginLinkLocator = By.cssSelector("a[href='/login']");
 	private By footerLinksLocator = By.cssSelector("div div div");
 
-	public HomePage(WebDriver driver, Logger logger) {
-		super(driver, logger);
+	public HomePage(WebDriver driver, Logger logger, WebDriverWait wait) {
+		super(driver, logger, wait);
 	}
 
 	public boolean isDashboardDisplayed() {

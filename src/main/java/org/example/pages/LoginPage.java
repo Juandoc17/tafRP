@@ -1,6 +1,8 @@
 package org.example.pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.util.logging.Logger;
 
 /**
@@ -16,8 +18,8 @@ public class LoginPage extends MainFunctional {
 	private WebElement loginSuccessfulMessage = driver.findElement(loginSuccessfulMessageLocator);
 	private WebElement loginErrorMessage = driver.findElement(By.id("flash"));
 
-	public LoginPage(WebDriver driver, Logger logger) {
-		super(driver, logger);
+	public LoginPage(WebDriver driver, Logger logger, WebDriverWait wait) {
+		super(driver, logger, wait);
 	}
 
 	public void fillUserNameField(String username) {
