@@ -26,8 +26,7 @@ public class CRUDAPITests extends BaseTests {
                 .body(activity)
                 .when()
                 .post();
-    
-        response.then().assertThat().statusCode(200)
+                response.then().assertThat().statusCode(200)
                 .and().body("title", equalTo(activity.getTitle()))
                 .and().body("dueDate", equalTo(activity.getDueDate()));
     }    
@@ -40,8 +39,7 @@ public class CRUDAPITests extends BaseTests {
                 .contentType(ContentType.JSON)
                 .when()
                 .get();
-
-        response.then().assertThat().statusCode(200)
+                response.then().assertThat().statusCode(200)
                 .and().body("size()", equalTo(expectedNumberOfRecords));
     }
 
@@ -53,7 +51,7 @@ public class CRUDAPITests extends BaseTests {
                 .pathParam("id", id)
                 .when()
                 .get("/{id}");        
-        response.then().assertThat().statusCode(200);
+                response.then().assertThat().statusCode(200);
     }
 
     @Test
@@ -75,8 +73,7 @@ public class CRUDAPITests extends BaseTests {
                 .pathParam("id", id)
                 .when()
                 .put("/{id}");
-
-        response.then().assertThat().statusCode(200)
+                response.then().assertThat().statusCode(200)
                 .and().body("title", equalTo(title))
                 .and().body("dueDate", equalTo(dueDate))
                 .and().body("completed", equalTo(completed));
@@ -96,7 +93,7 @@ public class CRUDAPITests extends BaseTests {
                 .pathParam("id", id)
                 .when()
                 .get("/{id}");
-        response.then().assertThat().statusCode(404);
+                response.then().assertThat().statusCode(404);
     }
 
     @Test
@@ -115,8 +112,7 @@ public class CRUDAPITests extends BaseTests {
                 .body(activity)
                 .when()
                 .post("/invalid");
-
-        response.then().assertThat().statusCode(404);
+                response.then().assertThat().statusCode(404);
     }
 
     @Test
@@ -125,8 +121,7 @@ public class CRUDAPITests extends BaseTests {
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/invalid");
-
-        response.then().assertThat().statusCode(404);
+                response.then().assertThat().statusCode(404);
     }
 
     @Test
@@ -137,7 +132,7 @@ public class CRUDAPITests extends BaseTests {
                 .pathParam("id", id)
                 .when()
                 .get("/{id}");
-        response.then().assertThat().statusCode(404);
+                response.then().assertThat().statusCode(404);
     }
 
     @Test
@@ -159,8 +154,7 @@ public class CRUDAPITests extends BaseTests {
                 .pathParam("id", id)
                 .when()
                 .put("/{id}");
-
-        response.then().assertThat().statusCode(404);
+                response.then().assertThat().statusCode(404);
     }
 
 }
