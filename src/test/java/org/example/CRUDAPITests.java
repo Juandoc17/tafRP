@@ -86,7 +86,7 @@ public class CRUDAPITests extends BaseTests {
                 .contentType(ContentType.JSON)
                 .pathParam("id", id)
                 .when()
-                .delete(baseUrl + "/{id}");
+                .delete("/{id}");
         response.then().assertThat().statusCode(200);
         response = given()
                 .contentType(ContentType.JSON)
@@ -112,7 +112,7 @@ public class CRUDAPITests extends BaseTests {
                 .body(activity)
                 .when()
                 .post("/invalid");
-                response.then().assertThat().statusCode(404);
+                response.then().assertThat().statusCode(405);
     }
 
     @Test
