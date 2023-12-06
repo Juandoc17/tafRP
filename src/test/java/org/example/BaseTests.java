@@ -15,6 +15,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -35,6 +36,7 @@ public class BaseTests {
 
 	protected EventFiringWebDriver driver;
 	protected HomePage homePage;
+	protected WebDriverWait wait;
 	protected static final Logger logger = Logger.getLogger(BaseTests.class.getName());
 
 
@@ -43,7 +45,7 @@ public class BaseTests {
 		System.setProperty("webdriver.chrome.driver", "resources/drivers/chromedriver.exe");
 		driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
 		driver.register(new EventReporter());
-		homePage = new HomePage(driver, logger);
+		homePage = new HomePage(driver, logger, wait);
 	}
 
 	@BeforeMethod
