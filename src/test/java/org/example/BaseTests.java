@@ -2,6 +2,8 @@ package org.example;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,6 +16,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -34,17 +38,27 @@ import com.google.common.io.Files;
 @Listeners(TestListener.class)
 public class BaseTests {
 
-	protected EventFiringWebDriver driver;
+	protected RemoteWebDriver driver;
 	protected HomePage homePage;
 	protected WebDriverWait wait;
 	protected static final Logger logger = Logger.getLogger(BaseTests.class.getName());
 
-
 	@BeforeClass
 	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "resources/drivers/chromedriver.exe");
-		driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
-		driver.register(new EventReporter());
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setBrowserName("chrome");
+		capabilities.setVersion("89.0");
+		capabilities.setCapability("enableVNC", true);
+		capabilities.setCapability("enableVideo", false);
+
+		try {
+			driver = new RemoteWebDriver(
+				URI.create("http://localhost:4444/wd/hub").toURL(), 
+				capabilities
+			);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		homePage = new HomePage(driver, logger, wait);
 	}
 
