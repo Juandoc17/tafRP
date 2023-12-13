@@ -1,6 +1,7 @@
 package org.example.pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.logging.Logger;
@@ -66,6 +67,34 @@ public class HomePage extends MainFunctional {
 	public String getCheckBoxesElementTag(){
 		return getElementTag(findElement(checkBoxesLinkLocator));
 	}
+	public WebElement getDashboardHeader() {
+		return driver.findElement(dashboardHeaderLocator);
+	}
+	
+	public WebElement getABTestingLink() {
+		return driver.findElement(aBTestingLinkLocator);
+	}
+	
+	public WebElement getAddRemoveElementsLink() {
+		return driver.findElement(addRemoveElementsLinkLocator);
+	}
+	
+	public WebElement getBasicAuthLink() {
+		return driver.findElement(basicAuthLinkLocator);
+	}
+	
+	public WebElement getCheckBoxesLink() {
+		return driver.findElement(checkBoxesLinkLocator);
+	}
+	
+	public WebElement getLoginLink() {
+		return driver.findElement(loginLinkLocator);
+	}
+	
+	public WebElement getFooterLinks() {
+		return driver.findElement(footerLinksLocator);
+	}
+	
 
 	public void navigateToABTestingPage(){
 		clickButton(driver.findElement(aBTestingLinkLocator));
@@ -74,4 +103,31 @@ public class HomePage extends MainFunctional {
 	public void navigateToLoginTestingPage(){
 		clickButton(driver.findElement(loginLinkLocator));
 	}
+	    public void dragAndDrop(WebElement sourceElement, WebElement targetElement) {
+        Actions actions = new Actions(driver);
+        actions.dragAndDrop(sourceElement, targetElement).build().perform();
+    }
+
+    public void resizeElementExample(WebElement resizeableElement, int xOffset, int yOffset) {
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(resizeableElement).moveByOffset(xOffset, yOffset).release().build().perform();
+    }
+
+    public void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", element);
+    }
+
+    public boolean isElementInView(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        return (Boolean) js.executeScript("return arguments[0].getBoundingClientRect().top >= 0 && " +
+                "arguments[0].getBoundingClientRect().left >= 0 && " +
+                "arguments[0].getBoundingClientRect().bottom <= window.innerHeight && " +
+                "arguments[0].getBoundingClientRect().right <= window.innerWidth;", element);
+    }
+
+    public void clickUsingJS(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", element);
+    }
 }

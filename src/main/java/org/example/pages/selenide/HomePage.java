@@ -16,7 +16,6 @@ import org.openqa.selenium.TakesScreenshot;
  * This includes navigation menus, user-specific information, and other key features of the application.
  */
 public class HomePage {
-	/* 
 
 	private SelenideElement dashboardHeader = $("h1.heading");
 	private SelenideElement aBTestingLink = $("a[href='/abtest']");
@@ -101,10 +100,8 @@ public class HomePage {
         }
     }
 
-
     @FunctionalInterface
     private interface Action<T> {
         T perform();
     }
-	*/
 }

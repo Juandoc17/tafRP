@@ -22,7 +22,6 @@ public class HomePageTest {
         Configuration.reportsFolder = "test-result/reports";
     }
 
-
     @Test
     public void testHomePage() {
         open("https://the-internet.herokuapp.com/");
@@ -35,7 +34,7 @@ public class HomePageTest {
             throw e;
         }
     }
-    
+
     @After
     public void tearDown() {
         Selenide.closeWebDriver();
