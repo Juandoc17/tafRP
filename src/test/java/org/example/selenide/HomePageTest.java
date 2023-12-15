@@ -27,8 +27,8 @@ public class HomePageTest {
         open("https://the-internet.herokuapp.com/");
 
         try {
-            //homePage.dashboardHeader.shouldBe(visible);
-            //assertTrue(homePage.isDashboardDisplayed());
+            homePage.getDashboard().shouldBe(visible);
+            assertTrue(homePage.isDashboardDisplayed());
         } catch (TimeoutException e) {
             Selenide.screenshot("dashboard-display-failure");
             throw e;

@@ -25,11 +25,12 @@ import org.testng.annotations.*;
 
 import com.google.common.io.Files;
 
-
 /**
  * BaseTests is a base class for all test classes.
- * This class can include common setup and teardown methods, as well as common utilities
- * for the tests. By extending this class, each test class can avoid code duplication
+ * This class can include common setup and teardown methods, as well as common
+ * utilities
+ * for the tests. By extending this class, each test class can avoid code
+ * duplication
  * and the tests can be more organized and readable.
  *
  * @author Juan Ocampo
@@ -53,9 +54,8 @@ public class BaseTests {
 
 		try {
 			driver = new RemoteWebDriver(
-				URI.create("http://localhost:4444/wd/hub").toURL(), 
-				capabilities
-			);
+					URI.create("http://localhost:4444/wd/hub").toURL(),
+					capabilities);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -94,7 +94,7 @@ public class BaseTests {
 	private ChromeOptions getChromeOptions() {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("disable-infobars");
-		//options.setHeadless(true);
+		// options.setHeadless(true);
 		return options;
 	}
 
@@ -106,4 +106,3 @@ public class BaseTests {
 		return new WindowManager(driver);
 	}
 }
-
