@@ -6,11 +6,13 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 import org.example.pages.HomePage;
 import org.example.pages.LoginPage;
 import org.example.BDDTesting.testReporter.TestListener;
+import org.example.integrations.JiraService;
 import org.example.utils.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -20,6 +22,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -43,24 +46,38 @@ public class BaseTests {
 	protected HomePage homePage;
 	protected WebDriverWait wait;
 	protected static final Logger logger = Logger.getLogger(BaseTests.class.getName());
+	private static final JiraService jiraService = new JiraService(
+        "https://your-jira-instance.atlassian.net",
+        "juan_ocampo",
+        "Jira_password01"
+    );
 
-	@BeforeClass
-	public void setUp() {
+    @BeforeClass
+    public void setUp() {
+        DesiredCapabilities capabilities = getSauceLabsCapabilities();
+        try {
+            driver = new RemoteWebDriver(
+                    new URL("https://ondemand.us-west-1.saucelabs.com:443/wd/hub"),
+                    capabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        homePage = new HomePage(driver, logger, wait);
+    }
+
+	private static DesiredCapabilities getSauceLabsCapabilities(ITestContext testContext) {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setBrowserName("chrome");
-		capabilities.setVersion("89.0");
-		capabilities.setCapability("enableVNC", true);
-		capabilities.setCapability("enableVideo", false);
-
-		try {
-			driver = new RemoteWebDriver(
-					URI.create("http://localhost:4444/wd/hub").toURL(),
-					capabilities);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		homePage = new HomePage(driver, logger, wait);
+		capabilities.setCapability("platformName", "macOS 14");
+		capabilities.setCapability("browserVersion", "latest");
+		capabilities.setCapability("sauce:options", Map.of(
+			"username", "oauth-juan.doc27-f87fc",
+			"accessKey", "9faab1c6-c67a-423c-8302-80a9ecd7016b",
+			"build", "build-1234",
+			"name", testContext.getName()
+		));
+		return capabilities;
 	}
+	
 
 	@BeforeMethod
 	public void goHome() {
@@ -88,6 +105,7 @@ public class BaseTests {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			jiraService.createIssue("Test failed: " + result.getName());
 		}
 	}
 

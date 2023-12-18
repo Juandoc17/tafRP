@@ -25,6 +25,7 @@
         <mockito.version>5.7.0</mockito.version>
         <restAssured.version>5.3.2</restAssured.version>
         <selenide.version>7.0.2</selenide.version>
+        <jira.version>5.2.4</jira.version>
         <maven.compiler.target>20</maven.compiler.target>
     </properties>
 
@@ -123,6 +124,11 @@
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>${selenide.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-rest-java-client-core</artifactId>
+            <version>${jira.version}</version>
         </dependency>
     </dependencies>
 </project>
