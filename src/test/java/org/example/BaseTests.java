@@ -13,6 +13,7 @@ import org.example.pages.HomePage;
 import org.example.pages.LoginPage;
 import org.example.BDDTesting.testReporter.TestListener;
 import org.example.integrations.JiraService;
+import org.example.integrations.SlackService;
 import org.example.utils.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -45,11 +46,14 @@ public class BaseTests {
 	protected RemoteWebDriver driver;
 	protected HomePage homePage;
 	protected WebDriverWait wait;
+	private static final String userName = "juan_ocampo";
+	private static final String password = "Jira_password01";
 	protected static final Logger logger = Logger.getLogger(BaseTests.class.getName());
+	private static final SlackService slackNotifier = new SlackService();
 	private static final JiraService jiraService = new JiraService(
         "https://your-jira-instance.atlassian.net",
-        "juan_ocampo",
-        "Jira_password01"
+        userName,
+        password
     );
 
     @BeforeClass
@@ -106,6 +110,17 @@ public class BaseTests {
 				e.printStackTrace();
 			}
 			jiraService.createIssue("Test failed: " + result.getName());
+		}
+	}
+
+	@AfterMethod
+	public void slackTestNotifier(ITestResult result) {
+		if (result.getStatus() == ITestResult.SUCCESS) {
+			slackNotifier.postNotification("Test passed: " + result.getName());
+		} else if (result.getStatus() == ITestResult.FAILURE) {
+			slackNotifier.postNotification("Test failed: " + result.getName());
+		} else if (result.getStatus() == ITestResult.SKIP) {
+			slackNotifier.postNotification("Test skipped: " + result.getName());
 		}
 	}
 
