@@ -27,6 +27,8 @@
         <selenide.version>7.0.2</selenide.version>
         <jira.version>5.2.4</jira.version>
         <maven.compiler.target>20</maven.compiler.target>
+        <jira.username></jira.username>
+        <jira.password></jira.password>
     </properties>
 
     <dependencies>

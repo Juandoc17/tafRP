@@ -46,10 +46,11 @@ public class BaseTests {
 	protected RemoteWebDriver driver;
 	protected HomePage homePage;
 	protected WebDriverWait wait;
-	private static final String userName = "juan_ocampo";
-	private static final String password = "Jira_password01";
+	private static final String userName = System.getProperty("jira.username");
+	private static final String password = System.getProperty("jira.password");
 	protected static final Logger logger = Logger.getLogger(BaseTests.class.getName());
 	private static final SlackService slackNotifier = new SlackService();
+	private static int passed = 0, failed = 0, skipped = 0;
 	private static final JiraService jiraService = new JiraService(
         "https://your-jira-instance.atlassian.net",
         userName,
@@ -114,14 +115,20 @@ public class BaseTests {
 	}
 
 	@AfterMethod
-	public void slackTestNotifier(ITestResult result) {
+	public void afterMethod(ITestResult result) {
 		if (result.getStatus() == ITestResult.SUCCESS) {
-			slackNotifier.postNotification("Test passed: " + result.getName());
+			passed++;
 		} else if (result.getStatus() == ITestResult.FAILURE) {
-			slackNotifier.postNotification("Test failed: " + result.getName());
+			failed++;
 		} else if (result.getStatus() == ITestResult.SKIP) {
-			slackNotifier.postNotification("Test skipped: " + result.getName());
+			skipped++;
 		}
+	}
+
+	@AfterClass
+	public void afterClass() {
+		String message = String.format("Tests completed. %d passed, %d failed, %d skipped.", passed, failed, skipped);
+		slackNotifier.postNotification(message);
 	}
 
 	private ChromeOptions getChromeOptions() {
