@@ -129,7 +129,11 @@ public class BaseTests {
 	public void afterClass() {
 		String message = String.format("Tests completed. %d passed, %d failed, %d skipped.", passed, failed, skipped);
 		slackNotifier.postNotification(message);
+		passed = 0;
+		failed = 0;
+		skipped = 0;
 	}
+	
 
 	private ChromeOptions getChromeOptions() {
 		ChromeOptions options = new ChromeOptions();
