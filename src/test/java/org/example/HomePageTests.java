@@ -1,12 +1,16 @@
 package org.example;
 
+import static org.example.BaseTests.slackNotifier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.jupiter.api.DisplayName;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import org.example.integrations.*;;
 
 /**
  * HomePageTests is a class that extends the BaseTests class.
@@ -30,7 +34,7 @@ public class HomePageTests extends BaseTests {
 		assertEquals(homePage.getDashboardTitle(), expectedTitle, "Page title does not match.");
 		logger.info("Page title validated");
 	}
-
+	
 	@Test
 	@DisplayName("Validation of Navigation Functionality")
 	public void validateNavigationFunctionality() {
@@ -40,13 +44,13 @@ public class HomePageTests extends BaseTests {
 		assertEquals(driver.getCurrentUrl(), expectedUrl, "Navigation failed.");
 		logger.info("Navigation functionality validated");
 	}
-
+	
 	@Test
 	@DisplayName("Validation Web Element are displayed")
 	public void validateCriticalElementsAreDisplayedInScreen() {
 		logger.info("Assert Home Page Title Page is Displayed");
 		assertTrue(homePage.isDashboardDisplayed(), "Dashboard H1 Element not found.");
-
+	
 		logger.info("Assert Links Page are Displayed");
 		assertTrue(homePage.isABTestingLinkVisibleAndInteractive(), "AB Link not found.");
 		assertTrue(homePage.isAddRemoveElementsLinkVisibleAndInteractive(), "Add Remove Link not found.");
@@ -56,20 +60,20 @@ public class HomePageTests extends BaseTests {
 		assertTrue(homePage.isFooterVisibleAndInteractive(), "Footer Link not found.");
 		logger.info("All Critical Elements founded");
 	}
-
+	
 	@Test
 	@DisplayName("Validation of Tag Type Elements")
 	public void validateTagTypesOfCriticalElements() {
 		logger.info("Assert DashBoard Tag Type");
 		assertEquals(homePage.getDashboardTag(), "h1");
-
+	
 		logger.info("Assert Page Links Tags");
 		assertEquals(homePage.getABTestingElementTag(), "a");
 		assertEquals(homePage.getAddRemoveElementTag(), "a");
 		assertEquals(homePage.getCheckBoxesElementTag(), "a");
 		logger.info("All Elements with correct Tag Types");
 	}
-
+	
 	@Test
 	@DisplayName("Validation of Drag and Drop Functionality")
 	public void validateDragAndDropFunctionality() {
